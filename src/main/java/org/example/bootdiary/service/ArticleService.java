@@ -8,7 +8,4 @@ import java.util.List;
 // 타입
 public interface ArticleService {
     List<Article> findAll();
-
-    //    void save(Article article) throws Exception;
-    void save(ArticleForm form, String filename) throws Exception;
 }
