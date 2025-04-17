@@ -1,5 +1,6 @@
 package org.example.bootdiary.controller;
 
+import lombok.extern.java.Log;
 import org.example.bootdiary.model.entity.Article;
 import org.example.bootdiary.model.form.ArticleForm;
 import org.example.bootdiary.service.ArticleService;
@@ -9,10 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/article")
+@Log // Logback
 public class ArticleController {
     private final ArticleService articleService;
     private final FileService fileService;
@@ -39,7 +42,18 @@ public class ArticleController {
 
     @PostMapping("/new")
     public String newArticle(ArticleForm form) {
+        log.info(form.toString());
+        MultipartFile file = form.file();
+//        if (!file.isEmpty()) {  // 파일의 존재로 감지하는게 아니라 용량의 존재로 감지
+        if (!file.getName().isEmpty() && !file.isEmpty()) {
+//            log.info("파일 있음");
+            String fileType = file.getContentType();
+            boolean isImage = fileType.startsWith("image/");
+            log.info(isImage ? "image 있음" : "image 없음");
 
+        } else {
+            log.info("파일 없음");
+        }
         return "redirect:/article";
     }
 }
