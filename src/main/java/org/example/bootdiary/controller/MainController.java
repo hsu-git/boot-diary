@@ -22,7 +22,7 @@ public class MainController {
     public String index(Model model) {
         model.addAttribute("title", "블로그에 오신 걸 환영함당 🤗");
         model.addAttribute("message", "저는 엄청난 개발자임당 🤪");
-        model.addAttribute("frontImage", "/assets/dino.jpeg");
+        model.addAttribute("frontImage", "/assets/red-panda.jpg");
         return "index";
     }
 
