@@ -1,8 +1,7 @@
 package org.example.bootdiary.service;
 
 import lombok.extern.java.Log;
-import org.apache.coyote.BadRequestException;
-import org.example.bootdiary.exception.BadFileException;
+import org.example.bootdiary.exception.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
