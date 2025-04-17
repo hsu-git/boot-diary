@@ -1,4 +1,4 @@
-package org.example.bootdiary.Exception;
+package org.example.bootdiary.exception;
 
 import org.apache.coyote.BadRequestException;
 

@@ -1,7 +1,7 @@
 package org.example.bootdiary.controller;
 
 import lombok.extern.java.Log;
-import org.example.bootdiary.Exception.BadFileException;
+import org.example.bootdiary.exception.BadFileException;
 import org.example.bootdiary.model.entity.Article;
 import org.example.bootdiary.model.form.ArticleForm;
 import org.example.bootdiary.service.ArticleService;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 
 @Controller
 @RequestMapping("/article")
@@ -21,12 +20,10 @@ import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 public class ArticleController {
     private final ArticleService articleService;
     private final FileService fileService;
-    private final ContentNegotiatingViewResolver contentNegotiatingViewResolver;
 
-    public ArticleController(ArticleService articleService, FileService fileService, ContentNegotiatingViewResolver contentNegotiatingViewResolver) {
+    public ArticleController(ArticleService articleService, FileService fileService) {
         this.articleService = articleService;
         this.fileService = fileService;
-        this.contentNegotiatingViewResolver = contentNegotiatingViewResolver;
     }
 
     @GetMapping
@@ -47,11 +44,12 @@ public class ArticleController {
     @PostMapping("/new")
     public String newArticle(ArticleForm form, Model model) {
         try {
-            String filename = fileService.upload(form.file());    // 여기서 아예 에러가 터지게 하자!
-            // 파일이 없다 -> 빈 게 나옴 / 파일이 비었다 혹은 잘못된 파일이다 -> 예외처리 -> BadFileException
+            String filename = fileService.upload(form.file()); // 여기서 아예 에러가 터지게 하자!
+            // 파일이 없다 -> 빈게 나옴. / 파일이 비었다 혹은 잘못된 파일이다 -> 예외처리 -> BadFileException
+
         } catch (BadFileException e) {
             model.addAttribute("message", "잘못된 파일");
-            // 폼의 제목과 내용은 그대로 가져가고 파일만 비워서 다시 폼으로 보냄
+            // 폼의 제목이랑 내용은 그대로 가져가고... 파일만 비워서 다시 폼으로 보냄
             model.addAttribute("form", new ArticleForm(form.title(), form.content(), null));
             return "redirect:/article/new";
         } catch (Exception e) {
