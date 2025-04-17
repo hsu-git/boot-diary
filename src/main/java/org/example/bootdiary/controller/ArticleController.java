@@ -19,14 +19,17 @@ public class ArticleController {
 
     @GetMapping
     public String list(Model model) {
-        model.addAttribute("title", "글 목록 ✏️");
+        model.addAttribute("title", "글 목록 📄️");
         model.addAttribute("list", articleService.findAll());
         return "article/list";
     }
 
     @GetMapping("/new")
     public String newArticle(Model model) {
+        model.addAttribute("title", "글 작성 ✏️");
         model.addAttribute("form", ArticleForm.empty());
+        model.addAttribute("edit", false);
         return "article/form";
     }
+
 }
