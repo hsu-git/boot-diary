@@ -8,7 +8,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-@Data   // Lombok
+@Data // Lombok
 @Entity // JPA
 public class Article {
     @Id
@@ -18,9 +18,9 @@ public class Article {
     private String title;
     @Column(nullable = false, length = 2000)
     private String content;
-    // Nullable
+    // nullable
     private String filename;
-    // DB에 들어갈때는 UTC가 좋음
+    // DB에 들어갈 때는 UTC로 하도록 합시다... 제발... 우리 약속해요!
     @CreatedDate
     private LocalDateTime createdAt = LocalDateTime.ofInstant(Instant.now(), ZoneOffset.UTC);
 }
